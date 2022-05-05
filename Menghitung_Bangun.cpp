@@ -2,8 +2,17 @@
 #include <fstream>
 #include <string>
 #include <filesystem>
+#include "conio.h"
 using namespace std;
 
+
+void regis() {
+    string username, password, pass1;
+	cout << "Pilih Username      : "; cin >> username;
+	cout << "Pilih Password      : "; cin >> password;
+    cout << "======================\n";
+    cout << "Verifikasi Password : "; cin >> pass1;
+}
 
 //just function
 void choises() {
@@ -12,6 +21,8 @@ void choises() {
     cout << "3. Luas Lingkaran (diketahui diameter) \n";
     cout << "=================================\n";
 }
+
+//------------------------------------------------------------------------------------------
 
 //function persegi panjang
 int persegi_panjang(int x, int y) {
@@ -40,18 +51,19 @@ float luas_lingkaran(float d) {
     return 0;
 }
 
-//-------------------------------------------------------------
+//---------------------------------------------------------------------------------------------
 
 //main function
 int kalkulator()
 {
-    cout << "\n" << endl;
     cout << "--==Calculation Program==--" << endl;
 
     cout << "===========================\n";
 
     //var persegi, triangel
     int choice, x, y;
+
+
 
     //var lingkaran
     float pi = 3.14, d, r;
@@ -65,6 +77,7 @@ int kalkulator()
         cout << "Lebar: "; cin >> y;
         cout << "==========================\n";
         cout << "Hasil dari " << x << " * " << y << " = " << persegi_panjang(x, y);
+       
 
     }
     else if (choice == 2) {
@@ -75,13 +88,14 @@ int kalkulator()
         cout << "Tinggi: "; cin >> y;
         cout << "===============================\n";
         cout << "Hasil dari 0.5 x " << x << " x " << y << " = " << luas_segitiga(x, y);
+        
     }
     else if (choice == 3) {
         cout << "Enter Value: \n";
         cout << "Diameter: "; cin >> d;
-
         cout << "Rumus = 22/7 x r2\n";
         luas_lingkaran(d);
+        
     }
     else {
         cout << "Error" << endl;
@@ -148,16 +162,30 @@ int main() {
 	}
 	else if (choice == 2) 
 	{
-		string username, password;
-		cout << "Pilih Username : "; cin >> username;
-		cout << "Pilih Password : "; cin >> password;
+		string username, password, pass1;
+		cout << "Pilih Username      : "; cin >> username;
+		cout << "Pilih Password      : "; cin >> password;
+        
+        cout << "================================\n";
+        cout << "Verifikasi Password : "; cin >> pass1;
+        cout << "================================\n";
+        
+        cout << "Registrasi Berhasil !" << endl;
 
-		ofstream file;
-		file.open("./" + username + ".txt");
-		file << username << endl << password;
-		file.close();
+        if (pass1 == password) 
+        {
+            ofstream file;
+            file.open("./" + username + ".txt");
+            file << username << endl << password;
+            file.close();
 
-		main();
+            main();
+        }
+        else 
+        {
+            cout << "Password Tidak Cocok ! \n";
+        }
+		
 	}
 
 
