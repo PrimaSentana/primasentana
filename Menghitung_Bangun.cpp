@@ -25,29 +25,30 @@ void choises() {
 //------------------------------------------------------------------------------------------
 
 //function persegi panjang
-int persegi_panjang(int x, int y) {
+float persegi_panjang(float x, float y) {
     return x * y;
 }
 
 //function triangle
-int luas_segitiga(int x, int y) {
+float luas_segitiga(float x, float y) {
     return 0.5 * x * y;
 }
 
 //function luas lingkaran (diketahui diameter)
 float luas_lingkaran(float d) {
-    int pi = 22 / 7;
-    int r = d * 0.5;
-    int rTwo = r * r;
-    int hasil = 22 / 7 * r * r;
+    float pi = 3.14;
+    float r = d * 0.5;
+    float rTwo = r * r;
+    float hasil = 3.14 * r * r;
+    //------------------------------------------------------
     cout << "Jari-jari (r) = " << " Diameter " << " : 2\n";
     cout << "              = " << d << " : 2\n";
     cout << "              = " << r << endl;
     //-------------------------------------------------------
     cout << "Hasil: \n";
-    cout << "= " << "22/7" << " x " << r << "^2\n";
-    cout << "= " << "22/7" << " x " << rTwo << endl;
-    cout << "= " << hasil;
+    cout << "(Desimal) = " << "3.14" << " x " << r << "^2\n";
+    cout << "(Desimal) = " << "3.14" << " x " << rTwo << endl;
+    cout << "(Desimal) = " << hasil << endl;
     return 0;
 }
 
@@ -61,9 +62,10 @@ int kalkulator()
     cout << "===========================\n";
 
     //var persegi, triangel
-    int choice, x, y;
+    float choice, x, y;
+    float x1, y1;
 
-
+    char tryx;
 
     //var lingkaran
     float pi = 3.14, d, r;
@@ -72,30 +74,45 @@ int kalkulator()
     if (choice == 1) {
         cout << "Rumus : panjang x lebar\n";
         cout << "==========================\n";
-        cout << "masukkan nilai x dan y: \n";
+        cout << "Masukkan nilai x dan y: \n";
         cout << "Panjang: "; cin >> x;
         cout << "Lebar: "; cin >> y;
         cout << "==========================\n";
-        cout << "Hasil dari " << x << " * " << y << " = " << persegi_panjang(x, y);
-       
+        cout << "Hasil dari " << x << " * " << y << " = " << persegi_panjang(x, y) << endl;
+        cout << "===============================" << endl;
+        cout << "Back (y/n)" /*Back Revisi*/; cin >> tryx;
+        
+        if (tryx == 'y' || tryx == 'Y') {
+            system("CLS");
+            kalkulator();
+        }
 
     }
     else if (choice == 2) {
         cout << "Rumus : 1/2 x alas x tinggi\n";
         cout << "===============================\n";
         cout << "Enter Value Below:  \n";
-        cout << "Alas: "; cin >> x;
-        cout << "Tinggi: "; cin >> y;
+        cout << "Alas: "; cin >> x1;
+        cout << "Tinggi: "; cin >> y1;
         cout << "===============================\n";
-        cout << "Hasil dari 0.5 x " << x << " x " << y << " = " << luas_segitiga(x, y);
-        
+        cout << "Hasil dari 0.5 x " << x1 << " x " << y1 << " = " << luas_segitiga(x1, y1) << endl << "===============================" << endl;
+        cout << "Back (y/n)" /*Back Revisi*/; cin >> tryx;
+        if (tryx == 'y' || tryx == 'Y') {
+            system("CLS");
+            kalkulator();
+        }
     }
     else if (choice == 3) {
         cout << "Enter Value: \n";
         cout << "Diameter: "; cin >> d;
-        cout << "Rumus = 22/7 x r2\n";
-        luas_lingkaran(d);
-        
+        cout << "Rumus = 3.14 x r2\n";
+        luas_lingkaran(d); cout << "\n";
+        cout << "===============================\n";
+        cout << "Back (y/n)" /*Back Revisi*/; cin >> tryx;
+        if (tryx == 'y' || tryx == 'Y') {
+            system("CLS");
+            kalkulator();
+        }
     }
     else {
         cout << "Error" << endl;
