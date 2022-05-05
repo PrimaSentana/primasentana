@@ -1,27 +1,17 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-
+#include <filesystem>
 using namespace std;
+
 
 //just function
 void choises() {
     cout << "1. Luas Persegi Panjang\n";
     cout << "2. Luas Segitiga\n";
     cout << "3. Luas Lingkaran (diketahui diameter) \n";
-    cout << "4. Luas Lingkaran (diketahui jari-jari)\n";
     cout << "=================================\n";
 }
-
-/* RUMUS MENCARI JARI-JARI
-
-float cari_jariJari(float diameter) {
-    float r = diameter * 0.5;
-    return 0;
-}
-*/
-
-//----------------------------------------------
 
 //function persegi panjang
 int persegi_panjang(int x, int y) {
@@ -35,10 +25,10 @@ int luas_segitiga(int x, int y) {
 
 //function luas lingkaran (diketahui diameter)
 float luas_lingkaran(float d) {
-    int pi = 22/7;
+    int pi = 22 / 7;
     int r = d * 0.5;
     int rTwo = r * r;
-    int hasil = 22/7 * r * r;
+    int hasil = 22 / 7 * r * r;
     cout << "Jari-jari (r) = " << " Diameter " << " : 2\n";
     cout << "              = " << d << " : 2\n";
     cout << "              = " << r << endl;
@@ -50,22 +40,18 @@ float luas_lingkaran(float d) {
     return 0;
 }
 
-//function Luas Lingkaran (diketahui jari")
-float luas_lingkaranR (float r) {
-    return 3.14 * r * r;
-}
-
 //-------------------------------------------------------------
 
 //main function
-int main()
+int kalkulator()
 {
-    cout << "calculation program" << endl;
-    
-    cout << "=========================\n";
+    cout << "\n" << endl;
+    cout << "--==Calculation Program==--" << endl;
+
+    cout << "===========================\n";
 
     //var persegi, triangel
-    int choice,x,y;
+    int choice, x, y;
 
     //var lingkaran
     float pi = 3.14, d, r;
@@ -77,6 +63,7 @@ int main()
         cout << "masukkan nilai x dan y: \n";
         cout << "Panjang: "; cin >> x;
         cout << "Lebar: "; cin >> y;
+        cout << "==========================\n";
         cout << "Hasil dari " << x << " * " << y << " = " << persegi_panjang(x, y);
 
     }
@@ -84,8 +71,9 @@ int main()
         cout << "Rumus : 1/2 x alas x tinggi\n";
         cout << "===============================\n";
         cout << "Enter Value Below:  \n";
-        cout << "Alas: " ; cin >> x;
+        cout << "Alas: "; cin >> x;
         cout << "Tinggi: "; cin >> y;
+        cout << "===============================\n";
         cout << "Hasil dari 0.5 x " << x << " x " << y << " = " << luas_segitiga(x, y);
     }
     else if (choice == 3) {
@@ -95,12 +83,82 @@ int main()
         cout << "Rumus = 22/7 x r2\n";
         luas_lingkaran(d);
     }
-    else if (choice == 4) {
-        cout << "Enter Value: \n";
-        cout << "Jari - Jari: "; cin >> r;
-        cout << "Rumus: 3.14 x r^2\n";
-        luas_lingkaranR(r);
-
+    else {
+        cout << "Error" << endl;
     }
+
+    return 0;
+}
+//==================================================================
+
+
+//fungsi login
+bool login() {
+	string username, password, user, pass;
+
+	cout << "Masukkan Username : "; cin >> username;
+	cout << "Masukkan Password : "; cin >> password;
+	
+
+	ifstream read("./" + username + ".txt");
+	getline(read, user);
+	getline(read, pass);
+
+	if (user == username && pass == password) {
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 
+//fungsi utama
+int main() {
+	int choice;
+	cout << "-----=====Pilih metode ======-----\n";
+	cout << "1. Login\n";
+	cout << "2. Registrasi\n";
+	cout << "==================================\n";
+	cout << "--->>>> : "; cin >> choice; 
+
+	if (choice == 1) 
+	{
+		bool status = login();
+        char i;
+
+		if (!status) {
+			cout << "Username atau Password Salah !\n";
+            cout << "Try Again? y/n : "; cin >> i;
+
+            if (i == 'y' || i == 'Y') {
+                system("CLS");
+                main();
+            }
+            else {
+                cout << "Thank You !" << endl;
+            }
+		}
+		else 
+		{
+			cout << "Berhasil Login !\n";
+            system("CLS");
+            kalkulator();
+		}
+		return 0;
+	}
+	else if (choice == 2) 
+	{
+		string username, password;
+		cout << "Pilih Username : "; cin >> username;
+		cout << "Pilih Password : "; cin >> password;
+
+		ofstream file;
+		file.open("./" + username + ".txt");
+		file << username << endl << password;
+		file.close();
+
+		main();
+	}
+
+
+}
