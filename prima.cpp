@@ -1,20 +1,62 @@
+/*--------------=============== PROGRAM UTK ===============--------------*/
+
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <filesystem>
-#include "conio.h"
 using namespace std;
 
-
-void regis() {
+//fungsi registrasi
+bool regis() {
     string username, password, pass1;
-	cout << "Pilih Username      : "; cin >> username;
-	cout << "Pilih Password      : "; cin >> password;
-    cout << "======================\n";
+    cout << "Pilih Username      : "; cin >> username;
+    cout << "Pilih Password      : "; cin >> password;
+
+    cout << "================================\n";
     cout << "Verifikasi Password : "; cin >> pass1;
+    cout << "================================\n";
+
+    if (pass1 == password)
+    {
+        cout << "Registrasi Berhasil !" << endl;
+
+        ofstream file;
+        file.open("./" + username + ".txt");
+        file << username << endl << password;
+        file.close();
+
+        return true;
+    }
+    else
+    {
+        cout << "Password Tidak Cocok, Mohon Coba Lagi !\n";
+        cout << "=====================================\n";
+
+        return false;
+    }
 }
 
-//just function
+//fungsi login
+bool login() {
+    string username, password, user, pass;
+
+    cout << "Masukkan Username : "; cin >> username;
+    cout << "Masukkan Password : "; cin >> password;
+
+
+    ifstream read("./" + username + ".txt");
+    getline(read, user);
+    getline(read, pass);
+
+    if (user == username && pass == password) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+
+//Fungsi pilihan metode
 void choises() {
     cout << "1. Luas Persegi Panjang\n";
     cout << "2. Luas Segitiga\n";
@@ -49,12 +91,12 @@ float luas_lingkaran(float d) {
     cout << "(Desimal) = " << "3.14" << " x " << r << "^2\n";
     cout << "(Desimal) = " << "3.14" << " x " << rTwo << endl;
     cout << "(Desimal) = " << hasil << endl;
-    return 0; 
+    return 0;
 }
 
 //---------------------------------------------------------------------------------------------
 
-//main function
+//Kalkulator Utama
 int kalkulator()
 {
     cout << "--==Calculation Program==--" << endl;
@@ -80,8 +122,8 @@ int kalkulator()
         cout << "==========================\n";
         cout << "Hasil dari " << x << " * " << y << " = " << persegi_panjang(x, y) << endl;
         cout << "===============================" << endl;
-        cout << "Back (y/n)" /*Back Revisi*/; cin >> tryx;
-        
+        cout << "Back (y/n) : " /*Back Revisi*/; cin >> tryx;
+
         if (tryx == 'y' || tryx == 'Y') {
             system("CLS");
             kalkulator();
@@ -96,7 +138,7 @@ int kalkulator()
         cout << "Tinggi: "; cin >> y1;
         cout << "===============================\n";
         cout << "Hasil dari 0.5 x " << x1 << " x " << y1 << " = " << luas_segitiga(x1, y1) << endl << "===============================" << endl;
-        cout << "Back (y/n)" /*Back Revisi*/; cin >> tryx;
+        cout << "Back (y/n) : " /*Back Revisi*/; cin >> tryx;
         if (tryx == 'y' || tryx == 'Y') {
             system("CLS");
             kalkulator();
@@ -105,10 +147,12 @@ int kalkulator()
     else if (choice == 3) {
         cout << "Enter Value: \n";
         cout << "Diameter: "; cin >> d;
+        cout << "===============================\n";
         cout << "Rumus = 3.14 x r2\n";
+        cout << "===============================\n";
         luas_lingkaran(d); cout << "\n";
         cout << "===============================\n";
-        cout << "Back (y/n)" /*Back Revisi*/; cin >> tryx;
+        cout << "Back (y/n) : " /*Back Revisi*/; cin >> tryx;
         if (tryx == 'y' || tryx == 'Y') {
             system("CLS");
             kalkulator();
@@ -123,42 +167,22 @@ int kalkulator()
 //==================================================================
 
 
-//fungsi login
-bool login() {
-	string username, password, user, pass;
-
-	cout << "Masukkan Username : "; cin >> username;
-	cout << "Masukkan Password : "; cin >> password;
-	
-
-	ifstream read("./" + username + ".txt");
-	getline(read, user);
-	getline(read, pass);
-
-	if (user == username && pass == password) {
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-
 //fungsi utama
 int main() {
-	int choice;
-	cout << "-----=====Pilih metode ======-----\n";
-	cout << "1. Login\n";
-	cout << "2. Registrasi\n";
-	cout << "==================================\n";
-	cout << "--->>>> : "; cin >> choice; 
+    int choice;
+    cout << "-----=====Pilih metode ======-----\n";
+    cout << "1. Login\n";
+    cout << "2. Registrasi\n";
+    cout << "==================================\n";
+    cout << "--->>>> : "; cin >> choice;
 
-	if (choice == 1) 
-	{
-		bool status = login();
+    if (choice == 1)
+    {
+        bool status = login();
         char i;
 
-		if (!status) {
-			cout << "Username atau Password Salah !\n";
+        if (!status) {
+            cout << "Username atau Password Salah !\n";
             cout << "Try Again? y/n : "; cin >> i;
 
             if (i == 'y' || i == 'Y') {
@@ -168,42 +192,43 @@ int main() {
             else {
                 cout << "Thank You !" << endl;
             }
-		}
-		else 
-		{
-			cout << "Berhasil Login !\n";
+        }
+        else
+        {
+            cout << "Berhasil Login !\n";
             system("CLS");
             kalkulator();
-		}
-		return 0;
-	}
-	else if (choice == 2) 
-	{
-		string username, password, pass1;
-		cout << "Pilih Username      : "; cin >> username;
-		cout << "Pilih Password      : "; cin >> password;
-        
-        cout << "================================\n";
-        cout << "Verifikasi Password : "; cin >> pass1;
-        cout << "================================\n";
-        
-        cout << "Registrasi Berhasil !" << endl;
+        }
+        return 0;
+    }
+    else if (choice == 2)
+    {
+        bool status1 = regis();
+        char x;
 
-        if (pass1 == password) 
+        if (!status1) {
+            cout << "Try Again? y/n : "; cin >> x;
+
+            if (x == 'y' || x == 'Y') {
+                bool status2 = regis();
+
+                if (!status2) {
+                    cout << "Registrasi Gagal, Mohon Mulai Ulang Program !\n"; 
+                }
+                else {
+                    main();
+                }
+            }
+            else {
+                cout << "Thank You !" << endl;
+            }
+        }
+        else
         {
-            ofstream file;
-            file.open("./" + username + ".txt");
-            file << username << endl << password;
-            file.close();
-
             main();
         }
-        else 
-        {
-            cout << "Password Tidak Cocok ! \n";
-        }
-		
-	}
+
+    }
 
 
 }
